@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MindGeekApp</string>
+    <string name="app_shared_preferences">MyPrefs</string>
+</resources>
