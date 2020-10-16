@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
-import com.cassiano.mindgeekapp.databinding.ActivityMainBinding
 import com.cassiano.mindgeekapp.extension.bindingContentView
 import com.cassiano.mindgeekapp.extension.showToast
 import com.cassiano.mindgeekapp.home.view.viewmodel.MainViewModel
@@ -14,7 +13,7 @@ import com.cassiano.mindgeekapp.extension.getSharedPreferences
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF
 import com.cassiano.mindgeekapp.internal.Router
 
-class MainActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     val viewModel: MainViewModel by viewModel()
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        bindingContentView(R.layout.activity_main).apply {
+        bindingContentView(R.layout.activity_settings).apply {
             setVariable(BR.viewModel, viewModel)
             setVariable(BR.onClick, View.OnClickListener { onClick() })
         }

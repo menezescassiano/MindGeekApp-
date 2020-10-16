@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".home.view.activity.MainActivity">
+        <activity
+            android:name=".splash.view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +20,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".home.view.activity.SettingsActivity"
+            android:label="NEW PASSCODE"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".password.view.activity.FirstAttemptPasswordActivity"
             android:label="NEW PASSCODE"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".password.view.activity.SecondAttemptPasswordActivity"
+            android:label="CONFIRM PASSCODE"
             android:screenOrientation="portrait">
 
         </activity>

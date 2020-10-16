@@ -7,14 +7,6 @@
 
         <import type="android.view.View" />
 
-        <variable
-            name="viewModel"
-            type="com.cassiano.mindgeekapp.password.view.viewmodel.FirstAttemptPasswordViewModel" />
-
-        <variable
-            name="onClick"
-            type="android.view.View.OnClickListener" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,16 +14,11 @@
         android:layout_height="match_parent"
         tools:context=".home.view.activity.SettingsActivity">
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:layout_margin="20dp"
+            android:text="splash activity"
             android:gravity="center"
-            android:maxLength="4"
-            app:textChanged="@{viewModel.onPasswordChanged}"
-            android:singleLine="true"
-            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
