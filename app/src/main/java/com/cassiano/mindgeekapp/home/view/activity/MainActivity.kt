@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         bindingContentView(R.layout.activity_main).apply {
             setVariable(BR.viewModel, viewModel)
             setVariable(BR.onClick, View.OnClickListener { onClick() })
-        } as ActivityMainBinding
+        }
     }
 
     private fun updateUI() {
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClick() {
         savePrefs(SHARED_PREF, !viewModel.isChecked.get(), "ok")
+        router.goToPassword()
     }
 
     private fun savePrefs(id: String, save: Boolean, message: String) {

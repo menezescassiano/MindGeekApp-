@@ -2,9 +2,9 @@ package com.cassiano.mindgeekapp.internal
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.cassiano.mindgeekapp.home.view.activity.MainActivity
+import com.cassiano.mindgeekapp.password.view.activity.FirstAttemptPasswordActivity
 
-class Router(val activity: AppCompatActivity) {
+class Router(private val activity: AppCompatActivity) {
 
     private fun goToScreen(startActivity: () -> Unit) {
         activity.run {
@@ -14,7 +14,7 @@ class Router(val activity: AppCompatActivity) {
 
     fun goToPassword() {
         activity.run {
-            goToScreen { startActivity(Intent(this, MainActivity::class.java)) }
+            goToScreen { startActivity(Intent(this, FirstAttemptPasswordActivity::class.java)) }
         }
     }
 
