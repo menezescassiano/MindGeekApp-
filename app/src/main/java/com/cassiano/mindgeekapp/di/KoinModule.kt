@@ -1,6 +1,6 @@
 package com.cassiano.mindgeekapp.di
 
-import com.cassiano.mindgeekapp.home.view.viewmodel.MainViewModel
+import com.cassiano.mindgeekapp.home.view.viewmodel.SettingsViewModel
 import com.cassiano.mindgeekapp.password.view.viewmodel.FirstAttemptPasswordViewModel
 import com.cassiano.mindgeekapp.password.view.viewmodel.SecondAttemptPasswordViewModel
 import com.cassiano.mindgeekapp.utils.ResourceManager
@@ -12,7 +12,7 @@ private val resourceManager = module {
 }
 
 private val viewModelModule = module {
-    viewModel { MainViewModel() }
+    viewModel { SettingsViewModel() }
     viewModel { FirstAttemptPasswordViewModel() }
     viewModel { SecondAttemptPasswordViewModel() }
     //viewModel { RecipeDetailViewModel(resourceManager = get()) }

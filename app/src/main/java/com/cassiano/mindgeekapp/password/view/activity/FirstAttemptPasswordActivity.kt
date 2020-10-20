@@ -1,14 +1,14 @@
 package com.cassiano.mindgeekapp.password.view.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
 import com.cassiano.mindgeekapp.extension.bindingContentView
+import com.cassiano.mindgeekapp.extension.getSharedPreferences
 import com.cassiano.mindgeekapp.extension.observe
 import com.cassiano.mindgeekapp.extension.showToast
-import com.cassiano.mindgeekapp.home.view.viewmodel.MainViewModel
+import com.cassiano.mindgeekapp.internal.Constants
 import com.cassiano.mindgeekapp.internal.Router
 import com.cassiano.mindgeekapp.password.view.viewmodel.FirstAttemptPasswordViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,6 +17,7 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
 
     val viewModel: FirstAttemptPasswordViewModel by viewModel()
     private val router by lazy { Router(this) }
+    private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +35,18 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.apply {
             observe(onPasswordLimit) {
-                router.goToPasswordSecondAttempt()
-                showToast("ok, man")
+                password.get()?.let {
+                    if (sharedPreferences.contains(Constants.SHARED_PREF_PASSWORD)) {
+                        if (it == sharedPreferences.getString(Constants.SHARED_PREF_PASSWORD, "")) {
+                            router.goToSettings(true)
+                        }
+                    } else {
+                        router.goToPasswordSecondAttempt(it)
+                    }
+
+                    showToast("ok, man")
+                }
+
             }
         }
     }

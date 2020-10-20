@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.cassiano.mindgeekapp.home.view.viewmodel.MainViewModel" />
+            type="com.cassiano.mindgeekapp.home.view.viewmodel.SettingsViewModel" />
 
         <variable
             name="onClick"
@@ -28,7 +28,7 @@
             android:layout_margin="20dp"
             android:text="ACTIVATE PASSCODE"
             android:onClick="@{onClick}"
-            android:checked="@{viewModel.isChecked}"
+            android:checked="@={viewModel.isChecked}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

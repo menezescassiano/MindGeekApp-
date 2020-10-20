@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.cassiano.mindgeekapp.internal.Constants
 
 fun AppCompatActivity.bindingContentView(layout: Int): ViewDataBinding {
     return DataBindingUtil.setContentView(this, layout)
@@ -30,4 +31,34 @@ fun Context.hasInternetConnection(): Boolean {
 
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun SharedPreferences.get(key: String, default: String? = null): String {
+    val value by lazy { getString(key, default).orEmpty() }
+
+    return takeIf { contains(key) }
+        ?.run { key }
+        ?: value
+}
+
+fun SharedPreferences.savePrefs(id: String, save: Boolean) {
+    with(edit()) {
+        putBoolean(id, save)
+        commit()
+    }
+}
+
+fun SharedPreferences.savePrefs(id: String, string: String) {
+    with(edit()) {
+        putString(id, string)
+        commit()
+    }
+}
+
+
+fun SharedPreferences.clearPrefs(id: String) {
+    with(edit()) {
+        remove(id)
+        commit()
+    }
 }
