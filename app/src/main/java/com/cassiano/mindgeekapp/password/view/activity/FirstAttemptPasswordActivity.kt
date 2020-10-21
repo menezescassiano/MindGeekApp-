@@ -15,10 +15,12 @@ import com.cassiano.mindgeekapp.extension.bindingContentView
 import com.cassiano.mindgeekapp.extension.getSharedPreferences
 import com.cassiano.mindgeekapp.extension.observe
 import com.cassiano.mindgeekapp.extension.savePrefs
+import com.cassiano.mindgeekapp.internal.Constants.Companion.BROADCAST_NAME
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_LOCKED
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
 import com.cassiano.mindgeekapp.internal.Router
 import com.cassiano.mindgeekapp.password.view.viewmodel.FirstAttemptPasswordViewModel
+import com.cassiano.mindgeekapp.password.view.viewmodel.FirstAttemptPasswordViewModel.Companion.MAX_TRIES
 import com.cassiano.mindgeekapp.service.job.ProcessTimerReceiver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,19 +30,29 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
     private val router by lazy { Router(this) }
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
 
+    companion object {
+        const val TIMER = 10L * 1000
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
         setupViewModel()
-        if (sharedPreferences.contains(SHARED_PREF_LOCKED)) {
-            viewModel.enabled.set(!sharedPreferences.getBoolean(SHARED_PREF_LOCKED, false))
-        }
+        handleSharedPreferences()
+    }
 
-        if (sharedPreferences.contains(SHARED_PREF_PASSWORD)) {
-            if (sharedPreferences.contains(SHARED_PREF_LOCKED) && sharedPreferences.getBoolean(SHARED_PREF_LOCKED, true)) {
-                registerReceiver(broadcastReceiver, IntentFilter("broadCastName"));
-            } else if (!sharedPreferences.contains(SHARED_PREF_LOCKED)) {
-                registerReceiver(broadcastReceiver, IntentFilter("broadCastName"));
+    private fun handleSharedPreferences() {
+        sharedPreferences.run {
+            if (contains(SHARED_PREF_LOCKED)) {
+                viewModel.enabled.set(!getBoolean(SHARED_PREF_LOCKED, false))
+            }
+
+            if (contains(SHARED_PREF_PASSWORD)) {
+                if (contains(SHARED_PREF_LOCKED) && getBoolean(SHARED_PREF_LOCKED, true)) {
+                    registerReceiver(broadcastReceiver, IntentFilter(BROADCAST_NAME))
+                } else if (!sharedPreferences.contains(SHARED_PREF_LOCKED)) {
+                    registerReceiver(broadcastReceiver, IntentFilter(BROADCAST_NAME))
+                }
             }
         }
     }
@@ -65,40 +77,35 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
                         if (it == sharedPreferences.getString(SHARED_PREF_PASSWORD, "")) {
                             router.goToSettings(true)
                         } else {
-                            viewModel.countTries++
-                            if (viewModel.countTries == 3) {
-                                viewModel.enabled.set(false)
+                            attemptCounter++
+                            if (attemptCounter == MAX_TRIES) {
+                                enabled.set(false)
                                 launchTestService()
-                                viewModel.countTries = 0
+                                attemptCounter = 0
                             }
                         }
                     } else {
                         router.goToPasswordSecondAttempt(it)
                     }
                 }
-
             }
         }
     }
 
     private fun launchTestService() {
         sharedPreferences.savePrefs(SHARED_PREF_LOCKED, true)
-        var alarmMgr: AlarmManager? = null
-        lateinit var alarmIntent: PendingIntent
-        alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmIntent = Intent(this, ProcessTimerReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(this, 0, intent, 0)
+        val alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent: PendingIntent = Intent(this, ProcessTimerReceiver::class.java).let {
+            PendingIntent.getBroadcast(this, 0, it, 0)
         }
 
         alarmMgr.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + 10 * 1000,
+            SystemClock.elapsedRealtime() + TIMER,
             alarmIntent
         )
 
-        val service = Intent(this, ProcessTimerReceiver::class.java)
-        startService(service)
-
+        startService(Intent(this, ProcessTimerReceiver::class.java))
     }
 
 }

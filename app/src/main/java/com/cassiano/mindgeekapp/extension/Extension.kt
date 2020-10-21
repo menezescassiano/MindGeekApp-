@@ -10,7 +10,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.cassiano.mindgeekapp.internal.Constants
 
 fun AppCompatActivity.bindingContentView(layout: Int): ViewDataBinding {
     return DataBindingUtil.setContentView(this, layout)
@@ -22,11 +21,6 @@ fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, expression: (
 
 fun Context.getSharedPreferences(name: String): SharedPreferences {
     return getSharedPreferences(name, Context.MODE_PRIVATE)
-}
-
-fun Context.hasInternetConnection(): Boolean {
-    return (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.activeNetworkInfo?.isConnected
-        ?: false
 }
 
 fun Context.showToast(message: String) {
@@ -54,7 +48,6 @@ fun SharedPreferences.savePrefs(id: String, string: String) {
         commit()
     }
 }
-
 
 fun SharedPreferences.clearPrefs(id: String) {
     with(edit()) {

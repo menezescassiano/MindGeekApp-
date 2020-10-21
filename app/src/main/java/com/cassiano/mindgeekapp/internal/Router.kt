@@ -2,8 +2,8 @@ package com.cassiano.mindgeekapp.internal
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.ObservableField
 import com.cassiano.mindgeekapp.home.view.activity.SettingsActivity
+import com.cassiano.mindgeekapp.internal.Constants.Companion.PASSWORD
 import com.cassiano.mindgeekapp.password.view.activity.FirstAttemptPasswordActivity
 import com.cassiano.mindgeekapp.password.view.activity.SecondAttemptPasswordActivity
 
@@ -44,11 +44,10 @@ class Router(private val activity: AppCompatActivity) {
     fun goToPasswordSecondAttempt(password: String) {
         activity.run {
             goToScreen {
-                Intent(this, SecondAttemptPasswordActivity::class.java).putExtra("password", password).apply {
+                Intent(this, SecondAttemptPasswordActivity::class.java).putExtra(PASSWORD, password).apply {
                     startActivity(this)
                 }
             }
         }
     }
-
 }

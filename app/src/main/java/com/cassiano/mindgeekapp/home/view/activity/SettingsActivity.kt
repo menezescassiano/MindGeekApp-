@@ -12,7 +12,6 @@ import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWOR
 import com.cassiano.mindgeekapp.internal.Router
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class SettingsActivity : AppCompatActivity() {
 
     val viewModel: SettingsViewModel by viewModel()
@@ -42,24 +41,20 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun onClick() {
-        savePrefs(SHARED_PREF, !viewModel.isChecked.get(), "ok")
-        when {
-            !viewModel.isChecked.get() -> clearPasswPrefs()
-            else -> router.goToPassword()
+        viewModel.run {
+            sharedPreferences.savePrefs(SHARED_PREF, !isChecked.get())
+            when {
+                !isChecked.get() -> clearPasswPrefs()
+                else -> router.goToPassword()
+            }
         }
+
     }
 
     private fun clearPasswPrefs() {
-        sharedPreferences.clearPrefs(SHARED_PREF_PASSWORD)
-        savePrefs(SHARED_PREF, false, "ok")
-
-        showToast("limpou")
+        sharedPreferences.run {
+            clearPrefs(SHARED_PREF_PASSWORD)
+            savePrefs(SHARED_PREF, false)
+        }
     }
-
-    private fun savePrefs(id: String, save: Boolean, message: String) {
-        sharedPreferences.savePrefs(id, save)
-
-        showToast(message)
-    }
-
 }

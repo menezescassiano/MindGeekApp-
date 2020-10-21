@@ -2,7 +2,6 @@ package com.cassiano.mindgeekapp.password.view.viewmodel
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
 import com.cassiano.mindgeekapp.utils.TextChanged
 
 class SecondAttemptPasswordViewModel : BaseViewModel() {

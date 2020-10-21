@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
-import com.cassiano.mindgeekapp.extension.*
+import com.cassiano.mindgeekapp.extension.bindingContentView
+import com.cassiano.mindgeekapp.extension.getSharedPreferences
+import com.cassiano.mindgeekapp.extension.observe
+import com.cassiano.mindgeekapp.extension.savePrefs
+import com.cassiano.mindgeekapp.internal.Constants.Companion.PASSWORD
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
 import com.cassiano.mindgeekapp.internal.Router
@@ -16,7 +20,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
     val viewModel: SecondAttemptPasswordViewModel by viewModel()
     private val router by lazy { Router(this) }
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
-    private val _password by lazy { intent.extras?.get("password") as String }
+    private val _password by lazy { intent.extras?.get(PASSWORD) as String }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +31,6 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
     private fun setupBinding() {
         bindingContentView(R.layout.activity_second_attempt_password).apply {
             setVariable(BR.viewModel, viewModel)
-
         }
     }
 
@@ -37,7 +40,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
                 viewModel.password.get()?.let {
                     when (it) {
                         _password -> {
-                            savePrefs(SHARED_PREF_PASSWORD, _password, "foi")
+                            savePrefs()
                             router.goToSettings(true)
                         }
                         else -> viewModel.showError.set(true)
@@ -47,14 +50,10 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
         }
     }
 
-    private fun savePrefs(id: String, password: String, message: String) {
+    private fun savePrefs() {
         sharedPreferences.run {
-            savePrefs(id, password)
+            savePrefs(SHARED_PREF_PASSWORD, _password)
             savePrefs(SHARED_PREF, true)
-
         }
-        showToast(message)
     }
-
-
 }

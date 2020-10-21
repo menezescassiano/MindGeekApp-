@@ -11,5 +11,5 @@ class FirstAttemptPasswordViewModel : BaseViewModel() {
 
     val password = ObservableField("")
     var enabled = ObservableBoolean(true)
-    var countTries = 0
+    var attemptCounter = 0
 }

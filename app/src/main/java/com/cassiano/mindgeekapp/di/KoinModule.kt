@@ -15,14 +15,11 @@ private val viewModelModule = module {
     viewModel { SettingsViewModel() }
     viewModel { FirstAttemptPasswordViewModel() }
     viewModel { SecondAttemptPasswordViewModel() }
-    //viewModel { RecipeDetailViewModel(resourceManager = get()) }
 }
 
 fun loadKoinModules() {
     org.koin.core.context.loadKoinModules(
         listOf(
-            /*serviceModule,
-            repositoryModule,*/
             resourceManager,
             viewModelModule
         )

@@ -25,22 +25,18 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        bindingContentView(R.layout.activity_splash).apply {
-            /*setVariable(BR.viewModel, viewModel)
-            setVariable(BR.onClick, View.OnClickListener { onClick() })*/
-        }
+        bindingContentView(R.layout.activity_splash)
     }
 
     private fun handleNextScreen() {
-        when {
-            sharedPreferences.contains(Constants.SHARED_PREF_PASSWORD) ||
-            sharedPreferences.getBoolean(Constants.SHARED_PREF, false) -> Handler().postDelayed({
-                router.goToPassword(
-                    true
-                )
-            }, TIMER)
-            else -> Handler().postDelayed({ router.goToSettings(true) }, TIMER)
+        sharedPreferences.run {
+            when {
+                contains(Constants.SHARED_PREF_PASSWORD) || getBoolean(
+                    Constants.SHARED_PREF,
+                    false
+                ) -> Handler().postDelayed({ router.goToPassword(true) }, TIMER)
+                else -> Handler().postDelayed({ router.goToSettings(true) }, TIMER)
+            }
         }
     }
-
 }
