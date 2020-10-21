@@ -11,14 +11,12 @@ import com.cassiano.mindgeekapp.extension.savePrefs
 import com.cassiano.mindgeekapp.internal.Constants.Companion.PASSWORD
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
-import com.cassiano.mindgeekapp.internal.Router
 import com.cassiano.mindgeekapp.password.view.viewmodel.SecondAttemptPasswordViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SecondAttemptPasswordActivity : AppCompatActivity() {
 
     val viewModel: SecondAttemptPasswordViewModel by viewModel()
-    private val router by lazy { Router(this) }
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
     private val _password by lazy { intent.extras?.get(PASSWORD) as String }
 
@@ -41,7 +39,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
                     when (it) {
                         _password -> {
                             savePrefs()
-                            router.goToSettings(true)
+                            finishAffinity()
                         }
                         else -> viewModel.showError.set(true)
                     }

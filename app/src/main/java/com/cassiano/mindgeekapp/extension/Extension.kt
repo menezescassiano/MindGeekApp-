@@ -2,7 +2,6 @@ package com.cassiano.mindgeekapp.extension
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil

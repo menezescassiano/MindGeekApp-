@@ -48,11 +48,8 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
             }
 
             if (contains(SHARED_PREF_PASSWORD)) {
-                if (contains(SHARED_PREF_LOCKED) && getBoolean(SHARED_PREF_LOCKED, true)) {
-                    registerReceiver(broadcastReceiver, IntentFilter(BROADCAST_NAME))
-                } else if (!sharedPreferences.contains(SHARED_PREF_LOCKED)) {
-                    registerReceiver(broadcastReceiver, IntentFilter(BROADCAST_NAME))
-                }
+                registerReceiver(broadcastReceiver, IntentFilter(BROADCAST_NAME))
+                setTitle(R.string.enter_passcode_title)
             }
         }
     }
@@ -99,13 +96,8 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
             PendingIntent.getBroadcast(this, 0, it, 0)
         }
 
-        alarmMgr.set(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + TIMER,
-            alarmIntent
-        )
+        alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + TIMER, alarmIntent)
 
         startService(Intent(this, ProcessTimerReceiver::class.java))
     }
-
 }

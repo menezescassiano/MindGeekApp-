@@ -5,7 +5,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
-import com.cassiano.mindgeekapp.extension.*
+import com.cassiano.mindgeekapp.extension.bindingContentView
+import com.cassiano.mindgeekapp.extension.clearPrefs
+import com.cassiano.mindgeekapp.extension.getSharedPreferences
+import com.cassiano.mindgeekapp.extension.savePrefs
 import com.cassiano.mindgeekapp.home.view.viewmodel.SettingsViewModel
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
@@ -48,7 +51,6 @@ class SettingsActivity : AppCompatActivity() {
                 else -> router.goToPassword()
             }
         }
-
     }
 
     private fun clearPasswPrefs() {

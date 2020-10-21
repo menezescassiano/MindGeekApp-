@@ -21,18 +21,20 @@
         </activity>
         <activity
             android:name=".home.view.activity.SettingsActivity"
-            android:label="NEW PASSCODE"
+            android:label="@string/settings_title"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".password.view.activity.FirstAttemptPasswordActivity"
-            android:label="NEW PASSCODE"
+            android:label="@string/new_passcode_title"
+            android:taskAffinity=".password"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".password.view.activity.SecondAttemptPasswordActivity"
-            android:label="CONFIRM PASSCODE"
+            android:label="@string/confirm_passcode_title"
+            android:taskAffinity=".password"
             android:screenOrientation="portrait">
 
         </activity>

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">MindGeekApp</string>
+    <string name="settings_title">SETTINGS</string>
+    <string name="new_passcode_title">NEW PASSCODE</string>
+    <string name="confirm_passcode_title">CONFIRM PASSCODE</string>
+    <string name="enter_passcode_title">ENTER PASSCODE</string>
     <string name="app_shared_preferences">MyPrefs</string>
     <string name="acivate_passcode">ACTIVATE PASSCODE</string>
     <string name="incorrect_password_warning">Incorrect passcode\n\nToo many failed attempt.\nApp is locked for 1 minute.</string>
+    <string name="splash_activity_text">MY AMAZING SPLASH ACTIVITY</string>
 </resources>
