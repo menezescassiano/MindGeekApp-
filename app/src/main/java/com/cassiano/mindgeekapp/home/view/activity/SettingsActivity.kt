@@ -61,4 +61,5 @@ class SettingsActivity : AppCompatActivity() {
 
         showToast(message)
     }
+
 }

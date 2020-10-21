@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MindGeekApp</string>
     <string name="app_shared_preferences">MyPrefs</string>
+    <string name="incorrect_password_warning">Incorrect passcode\n\nToo many failed attempt.\nApp is locked for 1 minute.</string>
 </resources>

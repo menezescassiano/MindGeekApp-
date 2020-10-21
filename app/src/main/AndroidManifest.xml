@@ -36,6 +36,13 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <receiver android:name=".service.job.ProcessTimerReceiver"
+            android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="ProcessTimerReceiver" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

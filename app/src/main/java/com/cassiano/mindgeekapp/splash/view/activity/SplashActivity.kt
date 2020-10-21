@@ -34,8 +34,13 @@ class SplashActivity : AppCompatActivity() {
     private fun handleNextScreen() {
         when {
             sharedPreferences.contains(Constants.SHARED_PREF_PASSWORD) ||
-            sharedPreferences.getBoolean(Constants.SHARED_PREF, false) -> Handler().postDelayed({ router.goToPassword(true) }, TIMER)
+            sharedPreferences.getBoolean(Constants.SHARED_PREF, false) -> Handler().postDelayed({
+                router.goToPassword(
+                    true
+                )
+            }, TIMER)
             else -> Handler().postDelayed({ router.goToSettings(true) }, TIMER)
         }
     }
+
 }

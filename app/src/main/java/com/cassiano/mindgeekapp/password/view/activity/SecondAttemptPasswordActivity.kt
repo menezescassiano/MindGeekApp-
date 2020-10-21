@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
 import com.cassiano.mindgeekapp.extension.*
-import com.cassiano.mindgeekapp.internal.Constants
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
 import com.cassiano.mindgeekapp.internal.Router
@@ -28,7 +27,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
     private fun setupBinding() {
         bindingContentView(R.layout.activity_second_attempt_password).apply {
             setVariable(BR.viewModel, viewModel)
-            //setVariable(BR.onClick, View.OnClickListener { onClick() })
+
         }
     }
 
@@ -52,10 +51,6 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
         sharedPreferences.run {
             savePrefs(id, password)
             savePrefs(SHARED_PREF, true)
-            /*with(sharedPreferences.edit()) {
-                putString(id, password)
-                commit()
-            }*/
 
         }
         showToast(message)
