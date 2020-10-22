@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
@@ -26,6 +27,7 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
     val viewModel: FirstAttemptPasswordViewModel by viewModel()
     private val router by lazy { Router(this) }
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
+    private val TAG = FirstAttemptPasswordActivity::class.java.simpleName
 
     companion object {
         const val TIMER = 10L * 1000
@@ -70,7 +72,10 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
                     when {
                         sharedPreferences.contains(SHARED_PREF_PASSWORD) -> {
                             when (it) {
-                                sharedPreferences.getString(SHARED_PREF_PASSWORD, "") -> router.goToSettings(true)
+                                sharedPreferences.getString(SHARED_PREF_PASSWORD, "") -> {
+                                    router.goToSettings(true)
+                                    Log.d(TAG, "Access granted")
+                                }
                                 else -> {
                                     attemptCounter++
                                     when (attemptCounter) {
@@ -78,8 +83,12 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
                                             enabled.set(false)
                                             launchTestService()
                                             attemptCounter = 0
+                                            Log.d(TAG, "Reached max tries")
                                         }
-                                        else -> showToast(getString(R.string.incorrect_password_message))
+                                        else -> {
+                                            showToast(getString(R.string.incorrect_password_message))
+                                            Log.d(TAG, "Incorrect password")
+                                        }
                                     }
                                 }
                             }
@@ -103,5 +112,6 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + TIMER, alarmIntent)
 
         startService(Intent(this, ProcessTimerReceiver::class.java))
+        Log.d(TAG, "Service has started")
     }
 }

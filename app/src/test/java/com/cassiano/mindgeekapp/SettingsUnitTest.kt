@@ -21,7 +21,6 @@ class SettingsUnitTest {
 
     private lateinit var viewModelMock: SettingsViewModel
 
-
     @Before
     fun init() {
         clearAllMocks()

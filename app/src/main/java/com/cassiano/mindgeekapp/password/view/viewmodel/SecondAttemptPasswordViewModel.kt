@@ -12,7 +12,7 @@ class SecondAttemptPasswordViewModel : BaseViewModel() {
     val onPassword = object : TextChanged {
 
         override fun onChanged(value: String?) {
-            takeIf { value?.count() == 4 }?.run {
+            takeIf { value?.count() == MAX_CHARACTERS }?.run {
                 onPasswordLimit.postValue(true)
             } ?: showError.set(false)
         }

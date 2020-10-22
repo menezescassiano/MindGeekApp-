@@ -14,7 +14,6 @@ import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-
 @RunWith(RobolectricTestRunner::class)
 @Config(application = ApplicationTest::class, sdk = [Build.VERSION_CODES.O_MR1])
 class SharedPrefsTest {
@@ -27,7 +26,6 @@ class SharedPrefsTest {
         context = Mockito.mock(Context::class.java)
         Mockito.`when`(context.getSharedPreferences(anyString(), anyInt())).thenReturn(sharedPrefs)
     }
-
 
     @Test
     @Throws(Exception::class)
