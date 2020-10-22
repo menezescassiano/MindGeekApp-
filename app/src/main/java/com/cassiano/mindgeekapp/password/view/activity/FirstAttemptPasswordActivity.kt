@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
 import com.cassiano.mindgeekapp.extension.*
+import com.cassiano.mindgeekapp.internal.Constants.Companion.ATTEMPT_COUNTER
 import com.cassiano.mindgeekapp.internal.Constants.Companion.BROADCAST_NAME
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_LOCKED
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
@@ -53,7 +54,7 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
         }
     }
 
-    var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             viewModel.enabled.set(true)
         }
@@ -73,23 +74,28 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
                         sharedPreferences.contains(SHARED_PREF_PASSWORD) -> {
                             when (it) {
                                 sharedPreferences.getString(SHARED_PREF_PASSWORD, "") -> {
+                                    savePrefCount(0)
                                     router.goToSettings(true)
                                     Log.d(TAG, "Access granted")
                                 }
                                 else -> {
+                                    attemptCounter = sharedPreferences.getInt(ATTEMPT_COUNTER, 0)
                                     attemptCounter++
                                     when (attemptCounter) {
                                         MAX_TRIES -> {
-                                            enabled.set(false)
-                                            launchTestService()
                                             attemptCounter = 0
+                                            enabled.set(false)
                                             Log.d(TAG, "Reached max tries")
+
+                                            launchTestService()
                                         }
                                         else -> {
                                             showToast(getString(R.string.incorrect_password_message))
+
                                             Log.d(TAG, "Incorrect password")
                                         }
                                     }
+                                    savePrefCount(attemptCounter)
                                 }
                             }
                         }
@@ -100,6 +106,10 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun savePrefCount(count: Int) {
+        sharedPreferences.savePrefs(ATTEMPT_COUNTER, count)
     }
 
     private fun launchTestService() {

@@ -52,6 +52,13 @@ fun SharedPreferences.savePrefs(id: String, string: String) {
     }
 }
 
+fun SharedPreferences.savePrefs(id: String, count: Int) {
+    with(edit()) {
+        putInt(id, count)
+        commit()
+    }
+}
+
 fun SharedPreferences.clearPrefs(id: String) {
     with(edit()) {
         remove(id)
