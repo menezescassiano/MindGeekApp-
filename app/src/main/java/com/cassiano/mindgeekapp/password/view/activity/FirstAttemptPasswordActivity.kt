@@ -31,7 +31,7 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
     private val TAG = FirstAttemptPasswordActivity::class.java.simpleName
 
     companion object {
-        const val TIMER = 10L * 1000
+        const val TIMER = 60L * 1000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
