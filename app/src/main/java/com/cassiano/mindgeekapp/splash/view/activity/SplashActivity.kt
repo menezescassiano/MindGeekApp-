@@ -8,6 +8,7 @@ import com.cassiano.mindgeekapp.extension.bindingContentView
 import com.cassiano.mindgeekapp.extension.getSharedPreferences
 import com.cassiano.mindgeekapp.internal.Constants
 import com.cassiano.mindgeekapp.internal.Router
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -26,15 +27,15 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setupBinding() {
         bindingContentView(R.layout.activity_splash)
+        lottieAnimation.setAnimation(R.raw.settings)
     }
 
     private fun handleNextScreen() {
         sharedPreferences.run {
             when {
-                contains(Constants.SHARED_PREF_PASSWORD) || getBoolean(
-                    Constants.SHARED_PREF,
-                    false
-                ) -> Handler().postDelayed({ router.goToPassword(true) }, TIMER)
+                contains(Constants.SHARED_PREF_PASSWORD) || getBoolean(Constants.SHARED_PREF, false) ->
+                    Handler().postDelayed({ router.goToPassword(true) }, TIMER)
+
                 else -> Handler().postDelayed({ router.goToSettings(true) }, TIMER)
             }
         }
