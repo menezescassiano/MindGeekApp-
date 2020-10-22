@@ -29,7 +29,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.isChecked.set(sharedPreferences.getBoolean(SHARED_PREF, false))
+        updateUI()
     }
 
     private fun setupBinding() {

@@ -11,10 +11,7 @@ import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
 import com.cassiano.mindgeekapp.BR
 import com.cassiano.mindgeekapp.R
-import com.cassiano.mindgeekapp.extension.bindingContentView
-import com.cassiano.mindgeekapp.extension.getSharedPreferences
-import com.cassiano.mindgeekapp.extension.observe
-import com.cassiano.mindgeekapp.extension.savePrefs
+import com.cassiano.mindgeekapp.extension.*
 import com.cassiano.mindgeekapp.internal.Constants.Companion.BROADCAST_NAME
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_LOCKED
 import com.cassiano.mindgeekapp.internal.Constants.Companion.SHARED_PREF_PASSWORD
@@ -70,19 +67,26 @@ class FirstAttemptPasswordActivity : AppCompatActivity() {
         viewModel.apply {
             observe(onPasswordLimit) {
                 password.get()?.let {
-                    if (sharedPreferences.contains(SHARED_PREF_PASSWORD)) {
-                        if (it == sharedPreferences.getString(SHARED_PREF_PASSWORD, "")) {
-                            router.goToSettings(true)
-                        } else {
-                            attemptCounter++
-                            if (attemptCounter == MAX_TRIES) {
-                                enabled.set(false)
-                                launchTestService()
-                                attemptCounter = 0
+                    when {
+                        sharedPreferences.contains(SHARED_PREF_PASSWORD) -> {
+                            when (it) {
+                                sharedPreferences.getString(SHARED_PREF_PASSWORD, "") -> router.goToSettings(true)
+                                else -> {
+                                    attemptCounter++
+                                    when (attemptCounter) {
+                                        MAX_TRIES -> {
+                                            enabled.set(false)
+                                            launchTestService()
+                                            attemptCounter = 0
+                                        }
+                                        else -> showToast(getString(R.string.incorrect_password_message))
+                                    }
+                                }
                             }
                         }
-                    } else {
-                        router.goToPasswordSecondAttempt(it)
+                        else -> {
+                            router.goToPasswordSecondAttempt(it)
+                        }
                     }
                 }
             }

@@ -18,7 +18,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
 
     val viewModel: SecondAttemptPasswordViewModel by viewModel()
     private val sharedPreferences by lazy { getSharedPreferences(getString(R.string.app_shared_preferences)) }
-    private val _password by lazy { intent.extras?.get(PASSWORD) as String }
+    private val mPassword by lazy { intent.extras?.get(PASSWORD) as String }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
             observe(onPasswordLimit) {
                 viewModel.password.get()?.let {
                     when (it) {
-                        _password -> {
+                        mPassword -> {
                             savePrefs()
                             finishAffinity()
                         }
@@ -50,7 +50,7 @@ class SecondAttemptPasswordActivity : AppCompatActivity() {
 
     private fun savePrefs() {
         sharedPreferences.run {
-            savePrefs(SHARED_PREF_PASSWORD, _password)
+            savePrefs(SHARED_PREF_PASSWORD, mPassword)
             savePrefs(SHARED_PREF, true)
         }
     }

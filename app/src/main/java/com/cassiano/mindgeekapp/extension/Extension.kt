@@ -2,6 +2,7 @@ package com.cassiano.mindgeekapp.extension
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,7 +24,10 @@ fun Context.getSharedPreferences(name: String): SharedPreferences {
 }
 
 fun Context.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).run {
+        setGravity(Gravity.CENTER, 0, 0)
+        show()
+    }
 }
 
 fun SharedPreferences.get(key: String, default: String? = null): String {

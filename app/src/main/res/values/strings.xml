@@ -8,4 +8,5 @@
     <string name="acivate_passcode">ACTIVATE PASSCODE</string>
     <string name="incorrect_password_warning">Incorrect passcode\n\nToo many failed attempt.\nApp is locked for 1 minute.</string>
     <string name="splash_activity_text">MY AMAZING SPLASH ACTIVITY</string>
+    <string name="incorrect_password_message">Password is incorrect. Try again.</string>
 </resources>
